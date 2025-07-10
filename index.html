@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HackerOS Search</title>
+  <title>LegendaryOS Search</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: 'Arial', sans-serif;
     }
 
     body {
-      background: linear-gradient(135deg, #1c2526 0%, #0d1117 100%);
+      background: linear-gradient(135deg, #1a0c00 0%, #2c1a00 30%, #4a2c00 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #e0e0e0;
+      color: #ffd700;
       overflow: hidden;
+      position: relative;
     }
 
-    /* Efekt cząsteczek z liniami */
     .particles {
       position: fixed;
       top: 0;
@@ -39,17 +39,19 @@
       top: 20px;
       left: 20px;
       z-index: 10;
+      transition: transform 0.4s ease;
     }
 
     .header img {
-      width: 60px;
+      width: 70px;
       height: auto;
-      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 10px rgba(255, 165, 0, 0.5));
+      transition: transform 0.4s ease, filter 0.4s ease;
     }
 
-    .header img:hover {
-      transform: scale(1.15) rotate(5deg);
-      filter: brightness(1.3) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+    .header:hover img {
+      transform: scale(1.2) rotate(5deg);
+      filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.8));
     }
 
     .main-container {
@@ -57,47 +59,48 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 35px;
+      gap: 40px;
       z-index: 10;
-      animation: fadeIn 1.5s ease-in-out;
+      animation: fadeIn 1.8s ease-out;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(40px); }
+      from { opacity: 0; transform: translateY(50px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     .main-logo {
-      width: 300px;
+      width: 320px;
       height: auto;
       opacity: 0.95;
-      filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
-      animation: glowPulse 4s infinite ease-in-out;
+      filter: drop-shadow(0 0 30px rgba(255, 165, 0, 0.6));
+      animation: logoGlow 5s infinite ease-in-out;
     }
 
-    @keyframes glowPulse {
-      0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3)); }
-      50% { filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.5)); }
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 20px rgba(255, 165, 0, 0.4)); }
+      50% { filter: drop-shadow(0 0 40px rgba(255, 165, 0, 0.8)); }
     }
 
     .search-container {
       position: relative;
       width: 100%;
-      max-width: 850px;
-      background: linear-gradient(145deg, #2d2d2d, #3a3a3a);
-      border-radius: 70px;
-      padding: 10px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), inset 0 2px 8px rgba(255, 255, 255, 0.15);
-      transition: box-shadow 0.4s ease, transform 0.4s ease;
+      max-width: 900px;
+      background: linear-gradient(135deg, #4a2c00, #6a3f00, #8a5500);
+      border-radius: 80px;
+      padding: 12px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7), inset 0 4px 12px rgba(255, 165, 0, 0.2);
+      transition: all 0.5s ease;
       z-index: 10;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 4px solid rgba(255, 215, 0, 0.3);
     }
 
     .search-container:hover {
-      box-shadow: 0 12px 35px rgba(255, 255, 255, 0.25), inset 0 2px 8px rgba(255, 255, 255, 0.2);
-      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(255, 165, 0, 0.3), inset 0 6px 15px rgba(255, 165, 0, 0.3);
+      transform: translateY(-8px) scale(1.03);
     }
 
     .search-form {
@@ -109,159 +112,146 @@
 
     .search-input {
       width: 100%;
-      padding: 20px 70px 20px 30px;
-      background: transparent;
-      border: 3px solid #e0e0e0;
-      border-radius: 70px;
-      color: #ffffff;
-      font-size: 19px;
+      padding: 22px 80px 22px 40px;
+      background: rgba(255, 165, 0, 0.1);
+      border: 4px solid #ffd700;
+      border-radius: 80px;
+      color: #fff;
+      font-size: 20px;
       outline: none;
-      transition: border-color 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+      transition: all 0.5s ease;
+      font-weight: 500;
     }
 
     .search-input:focus {
-      border-color: #ffffff;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.08);
+      border-color: #fff;
+      box-shadow: 0 0 25px rgba(255, 165, 0, 0.7), inset 0 0 10px rgba(255, 165, 0, 0.4);
+      background: rgba(255, 165, 0, 0.15);
     }
 
     .search-input::placeholder {
-      color: #b0b0b0;
+      color: #ffcc80;
       font-style: italic;
       transition: opacity 0.3s ease;
     }
 
     .search-input:focus::placeholder {
-      opacity: 0.5;
+      opacity: 0.6;
     }
 
     .search-button {
       position: absolute;
-      right: 10px;
-      background: linear-gradient(145deg, #e0e0e0, #ffffff);
+      right: 15px;
+      background: linear-gradient(135deg, #ffd700, #fff);
       border: none;
       border-radius: 50%;
       cursor: pointer;
-      padding: 14px;
-      transition: background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+      padding: 16px;
+      transition: all 0.5s ease;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.5);
     }
 
     .search-button:hover {
-      background: #ffffff;
-      transform: scale(1.25) rotate(8deg);
-      box-shadow: 0 5px 12px rgba(255, 255, 255, 0.4);
+      background: #fff;
+      transform: scale(1.3) rotate(10deg);
+      box-shadow: 0 7px 15px rgba(255, 165, 0, 0.6);
     }
 
     .search-button img {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       filter: invert(0.2);
-      transition: filter 0.4s ease, transform 0.4s ease;
+      transition: all 0.5s ease;
     }
 
     .search-button:hover img {
       filter: invert(0);
-      transform: rotate(-8deg);
+      transform: rotate(-10deg);
+    }
+
+    .info-text {
+      color: #ffcc80;
+      font-size: 18px;
+      font-style: italic;
+      text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+      animation: fadeInText 2s ease-out;
+    }
+
+    @keyframes fadeInText {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .footer {
       position: absolute;
-      bottom: 15px;
+      bottom: 20px;
       text-align: center;
-      font-size: 15px;
-      color: #b0b0b0;
+      font-size: 16px;
+      color: #ffcc80;
       z-index: 10;
       display: flex;
       align-items: center;
-      gap: 5px;
-      font-family: 'Arial', sans-serif;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
     }
 
     .footer a {
-      color: #58a6ff;
+      color: #ffd700;
       text-decoration: none;
       transition: color 0.3s ease;
     }
 
     .footer a:hover {
-      color: #ffffff;
+      color: #fff;
     }
 
     .footer img {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       filter: invert(0.7);
     }
 
     @media (max-width: 600px) {
-      .main-logo {
-        width: 220px;
-      }
-
-      .search-container {
-        max-width: 90%;
-        padding: 8px;
-      }
-
-      .search-input {
-        font-size: 17px;
-        padding: 16px 60px 16px 25px;
-      }
-
-      .search-button {
-        padding: 12px;
-      }
-
-      .search-button img {
-        width: 26px;
-        height: 26px;
-      }
-
-      .header img {
-        width: 50px;
-      }
-
-      .footer {
-        font-size: 13px;
-      }
-
-      .footer img {
-        width: 14px;
-        height: 14px;
-      }
+      .main-logo { width: 240px; }
+      .search-container { max-width: 90%; padding: 10px; border-radius: 60px; }
+      .search-input { font-size: 16px; padding: 18px 60px 18px 30px; }
+      .search-button { padding: 12px; }
+      .search-button img { width: 24px; height: 24px; }
+      .header img { width: 50px; }
+      .info-text { font-size: 14px; }
+      .footer { font-size: 12px; padding: 8px 15px; }
+      .footer img { width: 14px; height: 14px; }
     }
 
     @media (min-width: 1200px) {
-      .search-container {
-        max-width: 900px;
-      }
-
-      .main-logo {
-        width: 320px;
-      }
+      .search-container { max-width: 950px; }
+      .main-logo { width: 350px; }
     }
   </style>
 </head>
 <body>
   <canvas class="particles" id="particles"></canvas>
   <div class="header">
-    <img src="/usr/share/HackerOS/ICONS/HackerOS.png" alt="HackerOS Logo">
+    <img src="/usr/share/LegendaryOS/ICONS/LegendaryOS.png" alt="LegendaryOS Logo">
   </div>
   <div class="main-container">
-    <img class="main-logo" src="/usr/share/HackerOS/ICONS/Plymouth-Icons/watermark.png" alt="HackerOS Watermark">
+    <img class="main-logo" src="/usr/share/LegendaryOS/ICONS/watermark.png" alt="LegendaryOS Watermark">
     <div class="search-container">
       <form class="search-form" action="https://www.startpage.com/sp/search" method="GET">
-        <input type="text" class="search-input" name="query" placeholder="Wyszukaj w Startpage..." required>
+        <input type="text" class="search-input" name="query" placeholder="Wyszukaj w LegendaryOS..." required>
         <button type="submit" class="search-button">
           <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Search Icon">
         </button>
       </form>
     </div>
+    <div class="info-text">Odkryj moc LegendaryOS – wyszukiwanie z ogniem!</div>
   </div>
   <div class="footer">
     <img src="https://cdn-icons-png.flaticon.com/512/622/622669.png" alt="Startpage Icon">
-    Powered by <a href="https://www.startpage.com" target="_blank">Startpage</a> | HackerOS Search © 2025
+    Powered by <a href="https://www.startpage.com" target="_blank">Startpage</a> | LegendaryOS Search © 2025
   </div>
   <script>
     // Walidacja formularza
@@ -274,20 +264,20 @@
     });
 
     // Animacja placeholder
-    const placeholderText = "Wyszukaj w Startpage...";
+    const placeholderText = "Wyszukaj w LegendaryOS...";
     const input = document.querySelector('.search-input');
     let i = 0;
     function typePlaceholder() {
       if (i < placeholderText.length) {
         input.placeholder = placeholderText.slice(0, i + 1);
         i++;
-        setTimeout(typePlaceholder, 70);
+        setTimeout(typePlaceholder, 50);
       } else {
         setTimeout(() => {
           i = 0;
           input.placeholder = "";
           typePlaceholder();
-        }, 2500);
+        }, 2000);
       }
     }
     typePlaceholder();
@@ -299,23 +289,26 @@
     canvas.height = window.innerHeight;
 
     const particlesArray = [];
-    const numberOfParticles = 60;
+    const numberOfParticles = 80;
 
     class Particle {
       constructor() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.4 - 0.2;
-        this.speedY = Math.random() * 0.4 - 0.2;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 0.6 - 0.3;
+        this.speedY = Math.random() * 0.6 - 0.3;
+        this.color = `hsl(${Math.random() * 60 + 30}, 100%, 70%)`; // Warm orange hues
       }
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        if (this.size > 0.2) this.size -= 0.008;
+        if (this.size > 0.3) this.size -= 0.01;
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
       }
       draw() {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
@@ -334,9 +327,9 @@
           const dx = particlesArray[i].x - particlesArray[j].x;
           const dy = particlesArray[i].y - particlesArray[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          if (distance < 100) {
-            ctx.strokeStyle = `rgba(255, 255, 255, ${1 - distance / 100})`;
-            ctx.lineWidth = 0.5;
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(255, 165, 0, ${1 - distance / 150})`;
+            ctx.lineWidth = 0.3;
             ctx.beginPath();
             ctx.moveTo(particlesArray[i].x, particlesArray[i].y);
             ctx.lineTo(particlesArray[j].x, particlesArray[j].y);
@@ -351,7 +344,7 @@
       for (let i = 0; i < particlesArray.length; i++) {
         particlesArray[i].update();
         particlesArray[i].draw();
-        if (particlesArray[i].size <= 0.2) {
+        if (particlesArray[i].size <= 0.3) {
           particlesArray.splice(i, 1);
           particlesArray.push(new Particle());
           i--;
@@ -369,21 +362,21 @@
       canvas.height = window.innerHeight;
     });
 
-    // Reakcja paska wyszukiwania na ruch myszy
+    // Efekt hover na search-container
     document.addEventListener('mousemove', (e) => {
       const searchContainer = document.querySelector('.search-container');
       const rect = searchContainer.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      const maxTilt = 5;
+      const maxTilt = 8;
       const tiltX = ((centerY - e.clientY) / centerY) * maxTilt;
       const tiltY = ((centerX - e.clientX) / centerX) * maxTilt;
-      searchContainer.style.transform = `translateY(-4px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+      searchContainer.style.transform = `translateY(-6px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
     });
 
     document.addEventListener('mouseout', () => {
       const searchContainer = document.querySelector('.search-container');
-      searchContainer.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
+      searchContainer.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg) scale(1)';
     });
   </script>
 </body>
